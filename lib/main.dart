@@ -129,7 +129,56 @@ getStudentGrade(grade){
                         getStudentGrade(grade);
                     },
                 ),
-              )
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  RaisedButton(
+                    color: Colors.blue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16)
+                      ),
+                      child: Text("Create"),
+                      textColor: Colors.white,
+                      onPressed: (){
+
+                      }
+                    ),
+                    RaisedButton(
+                    color: Colors.blue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16)
+                      ),
+                      child: Text("Read"),
+                      textColor: Colors.white,
+                      onPressed: (){
+
+                      }
+                    ),
+                    RaisedButton(
+                    color: Colors.blue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16)
+                      ),
+                      child: Text("Update"),
+                      textColor: Colors.white,
+                      onPressed: (){
+
+                      }
+                    ),
+                    RaisedButton(
+                    color: Colors.blue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16)
+                      ),
+                      child: Text("Delete"),
+                      textColor: Colors.white,
+                      onPressed: (){
+
+                      }
+                    )
+                ],
+                )
             ],
             ),
         ),
