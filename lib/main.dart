@@ -1,6 +1,14 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-void main() => runApp(MaterialApp (
+Future<void> main() async {
+
+WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+
+runApp(MaterialApp (
     theme: ThemeData(
       brightness: Brightness.light,
       primaryColor: Colors.blue,
@@ -8,6 +16,7 @@ void main() => runApp(MaterialApp (
     ),
     home: MyApp(),
 ));
+}
 
 class MyApp extends StatefulWidget {
   MyApp({Key? key}) : super(key: key);
@@ -37,7 +46,51 @@ getStudentGrade(grade){
   this.studentGrade = double.parse(grade);
 }
 
+createData(){
+  print("created");
 
+  DocumentReference documentReference = 
+  FirebaseFirestore.instance.collection("MyStudents").
+  doc(studentName);
+
+  //Map
+
+  Map<String, dynamic> students = {
+    "studentName": studentName,
+    "studentID": studentID,
+    "studyProgramID": studyProgramID,
+    "studentGrade": studentGrade,
+  };
+
+
+  documentReference.set(students).whenComplete(() {
+          print("$studentName created");
+  });
+
+}
+
+readData(){
+  DocumentReference documentReference = 
+  FirebaseFirestore.instance.collection("MyStudents").
+  doc(studentName);
+
+documentReference.get().then((datasnapshot) {
+    // ignore: avoid_print
+    print(datasnapshot.data()["studentName"]);
+    print(datasnapshot.data()["studentID"]);
+    print(datasnapshot.data()["studyProgramID"]);
+    print(datasnapshot.data()["studentGrade"]);
+});
+
+}
+
+updateData(){
+  print("updated");
+}
+
+deleteData(){
+  print("deleted");
+}
 
   
   
@@ -48,11 +101,14 @@ getStudentGrade(grade){
           title: const Text("CRUD App"),
         ),
         body: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(1.0),
           child: Column(
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(bottom: 8.0),
+                padding: EdgeInsets.only(
+                  bottom: 1.0,
+                  top: 0.0
+                  ),
                 child: TextFormField(
                   decoration: const InputDecoration(
                     labelText: "Name",
@@ -60,7 +116,7 @@ getStudentGrade(grade){
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: Colors.blue,
-                        width: 2.0
+                        width: 1.0
                       )
                     )
                     
@@ -134,14 +190,14 @@ getStudentGrade(grade){
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   RaisedButton(
-                    color: Colors.blue,
+                    color: Colors.green,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16)
                       ),
                       child: Text("Create"),
                       textColor: Colors.white,
                       onPressed: (){
-
+                          createData();
                       }
                     ),
                     RaisedButton(
@@ -152,29 +208,29 @@ getStudentGrade(grade){
                       child: Text("Read"),
                       textColor: Colors.white,
                       onPressed: (){
-
+                          readData();
                       }
                     ),
                     RaisedButton(
-                    color: Colors.blue,
+                    color: Colors.orange,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16)
                       ),
                       child: Text("Update"),
                       textColor: Colors.white,
                       onPressed: (){
-
+                          updateData();
                       }
                     ),
                     RaisedButton(
-                    color: Colors.blue,
+                    color: Colors.red,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16)
                       ),
                       child: Text("Delete"),
                       textColor: Colors.white,
                       onPressed: (){
-
+                          deleteData();
                       }
                     )
                 ],
