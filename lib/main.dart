@@ -85,11 +85,38 @@ documentReference.get().then((datasnapshot) {
 }
 
 updateData(){
-  print("updated");
+  // print("updated");
+
+
+  DocumentReference documentReference = 
+  FirebaseFirestore.instance.collection("MyStudents").
+  doc(studentName);
+
+  //Map
+
+  Map<String, dynamic> students = {
+    "studentName": studentName,
+    "studentID": studentID,
+    "studyProgramID": studyProgramID,
+    "studentGrade": studentGrade,
+  };
+
+
+  documentReference.set(students).whenComplete(() {
+          print("$studentName updated");
+  });
+
 }
 
 deleteData(){
-  print("deleted");
+    DocumentReference documentReference = 
+    FirebaseFirestore.instance.collection("MyStudents").
+    doc(studentName);
+
+    documentReference.delete().whenComplete(() {
+
+        print("$studentName deleted");
+    });
 }
 
   
